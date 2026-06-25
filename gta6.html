@@ -1,0 +1,238 @@
+Code (html)
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    GTA VI | COMPENDIUM
+    <style>
+        /* --- NEON CORE VARIABLES --- */
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --deep-purple: #1a0b2e;
+            --dark-bg: #050510;
+            --glass-white: rgba(255, 255, 255, 0.08);
+            --glow-bloom: 0 0 15px rgba(0, 242, 255, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body {
+            background-color: var(--dark-bg);
+            /* A dual-gradient gives the "Neon City" depth */
+            background: radial-gradient(circle at center, #2a1b5e 0%, #050510 100%);
+            color: white;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+    
+        /* CRT/Scanline Overlay for that "Arcade" feel */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.12) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 999;
+            pointer-events: none;
+            background-size: 100% 4px, 3px 100%;
+        }
+    
+        /* Pricing/Entryway Styling */
+        .pricedown {
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            filter: drop-shadow(4px 4px 0px var(--neon-pink));
+        }
+    
+        /* START SCREEN */
+        #intro {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: opacity 0.8s ease;
+        }
+    
+        .enter-btn {
+            padding: 22px 50px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border: 3px solid var(--neon-cyan);
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 20px var(--neon-cyan);
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+    
+        .enter-btn:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 40px var(--neon-cyan);
+            transform: scale(1.05);
+        }
+    
+        /* DASHBOARD LAYOUT */
+        .dashboard {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: auto;
+            opacity: 0; /* Fade in after entry */
+            transition: opacity 1s ease-in;
+        }
+    
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+    
+        h1 { font-size: clamp(3rem, 10vw, 6rem); margin-bottom: 10px; }
+    
+        /* THE NEON CARDS */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
+            padding: 10px;
+        }
+    
+        .card {
+            position: relative;
+            padding: 40px 30px;
+            border: 2px solid var(--neon-cyan);
+            background: var(--glass-white);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+    
+        /* Hover effect for desktop, Active for mobile */
+        .card:hover {
+            transform: translateY(-8px) rotate(1deg);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 25px var(--neon-pink), 0 0 40px rgba(255, 0, 255, 0.3);
+        }
+    
+        .card h2 { margin-bottom: 15px; font-size: 2.2rem; }
+    
+        .card p { font-size: 0.95rem; line-height: 1.6; opacity: 0.8; color: #ccc; }
+    
+        /* List Styling */
+        ul { 
+            list-style: none; 
+            margin-top: 25px; 
+            padding: 0;
+            display: inline-block;
+            text-align: left;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
+        }
+    
+        li { margin-bottom: 6px; }
+    
+        /* Custom Scrollbar for the "Extra" look */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #1a1a3c; }
+        ::-webkit-scrollbar-thumb { bg: var(--neon-pink); border: 1px solid white; }
+    
+    </style>
+</head>
+<body>
+
+    <!-- Track loading -->
+    <audio id="synth_track" loop src="synth_music_track.mp3"></audio>
+    
+    <!-- Intro Section (Required for Auto-Play & Atmosphere) -->
+    <div id="intro">
+        <h1 class="pricedown">GTA VI</h1>
+        <p style="letter-spacing: 6px; margin: 20px;">COMPENDIUM_SYSTEM.EXE</p>
+        <button class="enter-btn" onclick="bootSystem()">ENTER THE ZONE</button>
+    </div>
+    
+    <!-- Main Content -->
+    <main id="dashboardContent" class="dashboard">
+        <div class="header">
+            <h1 class="pricedown">LEONIDA_FILES</h1>
+            <p style="color: var(--neon-cyan); font-weight: bold; letter-spacing: 2px;">AUTHORIZED ACCESS ONLY</p>
+        </div>
+    
+        <div class="grid">
+            <!-- Card 1 -->
+            <section class="card">
+                <h2 class="pricedown">WORLD_LOGS</h2>
+                <p>Mapping out the geography of Florida's newest coastline.</p>
+                <ul>
+                    <li>• Vice City Districts</li>
+                    <li>• Dynamic Weather Systems</li>
+                    <li>• Tourism Hubs</li>
+                </ul>
+            </section>
+    
+            <!-- Card 2 -->
+            <section class="card">
+                <h2 class="pricedown">MOTOR_POOL</h2>
+                <p>A comprehensive directory of vehicle types and custom mods.</p>
+                <ul>
+                    <li>• Muscle & Supercars</li>
+                    <li>• Custom Tuning Shop</li>
+                    <li>• Vehicle Dynamics</li>
+                </ul>
+            </section>
+    
+            <!-- Card 3 -->
+            <section class="card">
+                <h2 class="pricedown">SYSTEM_CORE</h2>
+                <p>Detailed analysis of the new physics engine and AI interactions.</p>
+                <ul>
+                    <li>• Advanced Physics</li>
+                    <li>• Crowd Interactions</li>
+                    <li>• Procedural Events</li>
+                </ul>
+            </section>
+    
+            <!-- Card 4 -->
+            <section class="card">
+                <h2 class="pricedown">INTEL_FEED</h2>
+                <p>Live-monitored community leaks and official media breakdowns.</p>
+                <ul>
+                    <li>• Social Media Feeds</li>
+                    <li>• Trailer Analytics</li>
+                    <li>• Roadmap Tracking</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+    
+    <script>
+        function bootSystem() {
+            // Trigger the synthwave music
+            const track = document.getElementById('synth_track');
+            track.play().catch(error => console.log("Audio blocked by browser: User must click again."));
+    
+            // Transition to main site
+            document.getElementById('intro').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('intro').style.display = 'none';
+                const content = document.getElementById('dashboardContent');
+                content.style.opacity = '1';
+            }, 800);
+        }
+    </script>
+
+</body>
+</html>
